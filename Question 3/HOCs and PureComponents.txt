@@ -1,0 +1,10 @@
+When to use higher order components (HOCs)?
+Higher-order components composes one component into another by wrapping the original component in a container component, 
+which is composition as opposed to inheritance. Thus, we use HOCs when we want to create a new component that reuses the
+current component’s logic in a functional programming sense (pure function). 
+
+When to use PureComponent?
+PureComponent should be used only when re-rendering of components depends only on the props and state of the component,
+and thus, every child component also needs to be a PureComponent. This is because shouldComponentUpdate() only does a shallow
+comparison between objects and if prop changes are deep within nested objects, the rendering updates could be missed.
+Using the PureComponent, however, does allow for performance improvements. 

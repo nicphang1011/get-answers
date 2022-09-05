@@ -1,0 +1,10 @@
+Redux is a single store that keeps all application state of the application, where its main priority is state update maintainability.
+
+When to use Redux:
+1. Redux usage is appropriate when there are large amounts of application states which are updated frequently in the application. This allows components to easily keep track of state changes in other components, especially when they do not have a parent-child relationship.
+2. When the application is large and complex and is worked on by multiple people, so that everyone is on the same page regarding states and their changes.
+
+When not to use Redux:
+1. There are already predefined ways of managing and sharing state across components using simple React. 
+2. The application does not have much state changes and mostly contains UI changes. 
+3. The application does not require server-side rendering.

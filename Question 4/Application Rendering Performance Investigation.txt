@@ -1,0 +1,19 @@
+If you were working on an application that was rendering a page/screen very slowly, how would you go about investigating and fixing the issue?
+1.	Use React Developer Tools to find the bottleneck for renders to fix them. 
+
+a.	Solution 1: Memoization
+Bottlenecks could be cause by unnecessary renders and slow renders. Therefore, I will check the code to try to memoize react components that 
+will be reused often with the same inputs. The React.memo() component and useMemo hook would come in handy.
+
+PureComponents or HOCs can also be used to avoid re-rendering as mentioned in the answer to the previous question.
+
+b.	Solution 2: Implement lazy loading
+Splitting code allows for dynamic loading of components as needed by the user instead of having to load everything all at once which would 
+slow down page loads. Therefore, we can use this method to lazy load different pages within an application instead of loading them all at once. 
+
+This can also be used for pages where there are many images that needs to be displayed. For example, google image search only loads images 
+just when the user is about to scroll to it. The same principle can apply to pages where a long list needs to be displayed. 
+
+2.	Use Chrome DevTools -> Performance tab to debug as it might not be related to React. 
+a.	Chrome DevTools allows us to conduct analysis on the performance of the application based on the frames per second (FPS) of the application,
+to derive the causes of what is cause slow loading of the page.

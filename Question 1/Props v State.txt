@@ -1,0 +1,4 @@
+Props are used to pass data from one component to another while state is a local data storage for a component and is managed internally. 
+A component would thus pass data (or its state) to their child component through props, and if a prop needs to be changed, 
+the state of the parent component should be changed instead.
+Hence, props are immutable while state is mutable.

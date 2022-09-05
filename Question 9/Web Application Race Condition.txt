@@ -1,0 +1,19 @@
+What could go wrong?
+
+After checking balance on Wallet A and verifying that Wallet A has sufficient funds, before incrementing the balance of Wallet B, we 
+should prevent any writing to Wallet A until Wallet B has been incremented and Wallet A has been decremented by the same amount. This is 
+to avoid three issues:
+    a. Write through failure in a single threaded, synchronous application - if DB is not successfully updated for Wallet B (increment) or 
+    Wallet A (decrement), the transaction can be reversed and there will be no resulting incorrect data.
+    b. Race condition exploitation in multithreaded asynchronous applications - For example, if multiple requests (2 in this example) are sent 
+    at once to increment Wallet B using funds from Wallet A by $10, all the threads could check for sufficient balance in Wallet A concurrently 
+    and find it sufficient, assuming that Wallet A only has $10 in it. The multiple threads would then increase Wallet B's balance all at once, 
+    for a total of $20, and then attempt to decrease Wallet A's amount by $10 each. However, only one thread can only succeed as the balance
+    of Wallet A cannot go below $0, which results in the user having more money than before ($10 + $20 - $10 = $20).
+    c. User from exploiting ability to write to DB before rightful decrement in funds of Wallet A can occur (i.e. user withdraws all funds from
+    Wallet A before it can be decremented as increment to Wallet B is ongoing). This results in user being allocated a total of more funds than 
+    what he/she has. 
+
+In order to prevent race conditions, we can use locks or language specific multithreading or asynchronous capabilities (e.g. ConcurrentHashMap
+or async function in Java and threading.Lock in Python). A second method would be to ensure that the database is atomic so that if the decrement
+of Wallet B is unable to go through, then all database transactions will not occur. 
